@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn -B compile'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    sh 'mvn -B clean install'
+                }
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                script {
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+    }
+}
